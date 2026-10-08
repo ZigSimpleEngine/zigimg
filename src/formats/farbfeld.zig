@@ -105,7 +105,7 @@ pub const Farbfeld = struct {
         try writer.writeAll(encoded_header[0..]);
 
         // Take advantage of platform endianess if possible
-        if (builtin.cpu.arch.endian() == .big) {
+        if (builtin.target.cpu.arch.endian() == .big) {
             const pixels_bytes = pixels.asConstBytes();
             try writer.writeAll(pixels_bytes);
         } else {
