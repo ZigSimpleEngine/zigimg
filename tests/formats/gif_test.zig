@@ -845,7 +845,7 @@ fn doGifTest(entry_name: []const u8) !void {
     const area_allocator = area_alloc.allocator();
     defer area_alloc.deinit();
 
-    const config_filename = try std.fmt.allocPrint(area_allocator, "{s}.conf", .{entry_name});
+    const config_filename = try area_allocator.print("{s}.conf", .{entry_name});
     const config_filepath = try std.fs.path.resolve(area_allocator, &[_][]const u8{ helpers.fixtures_path, "gif", config_filename });
 
     const config_file = try helpers.testOpenFile(test_io, config_filepath);
@@ -1007,7 +1007,7 @@ fn doGifRoundtripTest(entry_name: []const u8) !RoundtripResult {
     defer area_alloc.deinit();
 
     // Build path to GIF file
-    const gif_filename = std.fmt.allocPrint(area_allocator, "{s}.gif", .{entry_name}) catch {
+    const gif_filename = area_allocator.print("{s}.gif", .{entry_name}) catch {
         std.debug.print("FAIL (allocPrint failed)\n", .{});
         return .failed;
     };
